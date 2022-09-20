@@ -246,7 +246,9 @@
                             }
                           ?>
                         </td>
-                        <td><a href="profile-edit.php?=$user_data[id]"><i class="fa-solid fa-pencil"></i></a><a href="#"><i class="fa-solid fa-trash-can"></i></a></td>
+                        <td>
+                          <?php echo "<a href='profile-edit.php?user_id=$user_data[id]'><i class='fa-solid fa-pencil'></i></a><a href='#'><i class='fa-solid fa-trash-can'></i></a>"; ?>
+                        </td>
                       </tr> 
                     <?php } ?> 
                   </tbody>

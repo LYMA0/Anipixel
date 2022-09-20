@@ -2,12 +2,9 @@
   include '../../config.php';
   session_start();
   $user_id = $_SESSION['user_id'];
-  if(empty($_GET['id']))
-  {
-
-  }
-
+  $id = $_GET['user_id'];
   
+
 
   if(!isset($user_id)){
     header('location:http://localhost/anipixel_admin/login.php');
@@ -20,6 +17,17 @@
     header('location:http://localhost/anipixel_admin/login.php');
     exit();
   };
+
+  //Pegando usuario de edição
+  if(!empty($id)){
+    $sqlSelect = "SELECT * FROM user_info WHERE id=$id";
+    $result = $conn->query($sqlSelect);
+    if(mysqli_num_rows($result) > 0){
+      $edit_user = mysqli_fetch_assoc($result);
+    }else{
+      
+    }
+  }
 
   //Pegando usuario
   $select_user = mysqli_query($conn, "SELECT * FROM `user_info` WHERE id = '$user_id'") or die('query failed');
@@ -215,9 +223,9 @@
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle" src="../dist/img/<?php echo $fetch_user['avatar']?>" alt="Foto de usuario">
+                  <img class="profile-user-img img-fluid img-circle" src="../dist/img/<?php echo $edit_user['avatar']?>" alt="Foto de usuario">
                 </div>
-                <h3 class="profile-username text-center"><?php echo $fetch_user['name']; ?></h3>
+                <h3 class="profile-username text-center"><?php echo $edit_user['name']; ?></h3>
 
                 <p class="text-muted text-center">Software Engineer</p>
 
