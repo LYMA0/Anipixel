@@ -17,15 +17,18 @@
     header('location:http://localhost/anipixel_admin/login.php');
     exit();
   };
-
+  
   //Pegando usuario de edição
   if(!empty($id)){
+    $sqlSelect = mysqli_query($conn, "SELECT * FROM `user_info` WHERE id = '$id'") or die ('query faile');
+    /*
     $sqlSelect = "SELECT * FROM user_info WHERE id=$id";
     $result = $conn->query($sqlSelect);
-    if(mysqli_num_rows($result) > 0){
-      $edit_user = mysqli_fetch_assoc($result);
+    */
+    if(mysqli_num_rows($sqlSelect) > 0){
+      $edit_user = mysqli_fetch_assoc($sqlSelect);  //Fazer com que a area de Setting seja editavel valores do usuario
     }else{
-      
+      header('location:contacts.php');
     }
   }
 
@@ -227,9 +230,30 @@
                 </div>
                 <h3 class="profile-username text-center"><?php echo $edit_user['name']; ?></h3>
 
-                <p class="text-muted text-center">Software Engineer</p>
-
-                <ul class="list-group list-group-unbordered mb-3">
+                <p class="text-muted text-center">
+                  <?php
+                    if($edit_user['position']==1)
+                    {
+                      echo "Usuario"; 
+                    }
+                    else
+                    {
+                      echo "Admin";
+                    }     
+                  ?>
+                </p>
+                
+                <?php
+                  if($edit_user['position']>1)
+                  {
+                    echo  "<ul class='list-group list-group-unbordered mb-3'>";
+                    echo  "<li class='list-group-item'><b>Publicações</b> <a class='float-right'>1,322</a></li>";
+                    echo  "<li class='list-group-item'><b>Suporte</b> <a class='float-right'>1,322</a></li>";
+                    echo  "</ul>";
+                  }
+                ?>
+                <!-- ul de exemplo pro PHP a cima
+                <ul class='list-group list-group-unbordered mb-3'>
                   <li class="list-group-item">
                     <b>Followers</b> <a class="float-right">1,322</a>
                   </li>
@@ -240,8 +264,7 @@
                     <b>Friends</b> <a class="float-right">13,287</a>
                   </li>
                 </ul>
-
-                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                -->
               </div>
               <!-- /.card-body -->
             </div>
@@ -401,19 +424,13 @@
                       <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputName" placeholder="Name">
+                          <input type="email" class="form-control" id="inputName" placeholder="Name" value="<?php echo $edit_user['name']  ?>">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
                           <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputName2" placeholder="Name">
                         </div>
                       </div>
                       <div class="form-group row">

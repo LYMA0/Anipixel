@@ -26,12 +26,13 @@ if(isset($_POST['submit'])){
    }
 
 }
-
-   //background rand
+   /*
+   //Outro metodo de background randomico
    $bg = array('background_login1.png', 'background_login2.png', 'background_login3.png'); // array of filenames
 
    $i = rand(0, count($bg)-1);
    $selectedBg = "$bg[$i]";
+   */
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +46,7 @@ if(isset($_POST['submit'])){
    <link rel="stylesheet" href="css/login.css">
    <style>
       body{
-         background-image: url("assets/<?php echo $selectedBg;?>");
+         background-image: url("assets/background_login<?php echo rand(1, 3); ?>.png");
       }
    </style>
 </head>
